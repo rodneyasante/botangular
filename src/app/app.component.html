@@ -1,20 +1,87 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div id="app">
+  <div class="wave">
+      <img src="assets/images/wave1.png" alt="">
+      <img src="assets/images/wave2.png" alt="">
+      <img src="assets/images/wave3.png" alt="">
+      <img src="assets/images/wave4.png" alt="">
+  </div>
+  <div class="flex-center position-ref full-height" [class.chat-open]="!closed">
 
+      <div class="top left"><img src="assets/images/favicon.ico" width="83px"></div>
+
+      <div class="content">
+          <div class="title m-b-md">
+              Hi There!
+          </div>
+
+          <div class="subtitle m-b-md">
+              I am the much awaited member of the #GoDigi Team.<br>
+              With me, your banking interactions are just a chat away.<br>
+              Hit the button at the bottom right to get started.
+          </div>
+
+          <div class="links">
+              <p>Coming soon on</p>
+              <a href="#"><fa name="facebook" size="2x"></fa></a>
+              <a href="https://join.skype.com/bot/aa3b379d-ae06-4635-96be-3e35bb089c04" target="_blank"><fa name="skype" size="2x"></fa></a>
+              <a href="https://t.me/stanbic_bot" target="_blank"><fa name="telegram" size="2x"></fa></a>
+          </div>
+
+          <div class="chatbox">
+              <div class="header">
+                  <a href="#" (click)="closeChat()" id="closebtn"><img src="assets/images/closeicon.png" alt=""></a>
+              </div>
+              <div class="messages">
+                  <ul id="chats">
+                          <li [class]="chat.bot ? 'bot' : 'user'" *ngFor="let chat of chats; let index = index">
+                              <span *ngIf="isSimpleResponse(chat)">{{chat.msg.speech}}</span>
+                              <ng-container *ngIf="isSuggestion(chat)">
+                                <input *ngFor="let reply of chat.msg.replies" [value]="reply" 
+                                    (click)="respondSuggestion(reply, index)" type="button">
+                              </ng-container>
+                          </li>
+                          <li *ngIf="loading">
+                              <div class="square">
+                              <div class="spinner">
+                                  <div class="lightup6"></div>
+                                  <div class="lightup5"></div>
+                                  <div class="lightup4"></div>
+                                  <div class="lightup3"></div>
+                                  <div class="lightup2"></div>
+                                  <div class="lightup1"></div>
+                              </div>
+                              </div>
+                              <div class="clear"></div>
+                          </li>
+                          <li *ngIf="slotDialog" class="custom-btn">
+                              <div>
+                                  <button (click)="cancel">Cancel</button>
+                              </div>
+                          </li>
+                      <div class="clear"></div> 
+                  </ul>
+              </div>
+              <div class="footer fading-effect">
+                  <div class="input-box">
+                      <div class="input-message">
+                          <input #textbox id="textbox" ng-model="input" (keyup.enter)="send(textbox.value)" placeholder="How can I be of assistance?" autofocus >
+                      </div>
+                  </div>
+                  <div class="custom-btn">
+                      <p>Some things you can ask me</p>
+                      <div>
+                          <button *ngFor="let action of actions" (click)="sendQuickaction(action)" >{{action}}</button>
+                          <a href="mailto:StanbicGhanaGoDigi@mail.standardbank.com?subject=BOT Feedback - Staff Pilot" target="_blank">Give Feedback</a>
+                      </div>
+                  </div> 
+              </div> 
+          </div>
+
+      </div>
+
+      <div class="bottom left hashtag">#GoDigi</div>
+
+      <div class="bottom right chat-button" (click)="openChat()"><img src="assets/images/chaticon.png" width="50px"></div>
+
+  </div>
+</div>
